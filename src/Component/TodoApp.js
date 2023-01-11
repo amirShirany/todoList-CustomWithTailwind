@@ -6,15 +6,14 @@ import TodoList from "./TodoList"
 
 const TodoApp = () => {
   const [todos, setTodos] = useState([])
-  const [selectedOption, setSelectedOption] = useState("All")
   const [filteredTodos, setFilteredTodos] = useState([])
+  const [status, setStatus] = useState("All")
 
   useEffect(() => {
-    filterTodos(selectedOption.value)
-  }, [todos, selectedOption])
+    filterTodos(status.value)
+  }, [todos, status])
 
   const addTodo = (input) => {
-    // console.log(input);
     const newTodo = {
       id: Math.floor(Math.random() * 1000),
       text: input,
@@ -22,6 +21,7 @@ const TodoApp = () => {
     }
     setTodos([...todos, newTodo])
   }
+
   const completeTodo = (id) => {
     // item => findIndex => clone
     const index = todos.findIndex((todo) => todo.id === id)
@@ -63,7 +63,7 @@ const TodoApp = () => {
   }
 
   const selectHandler = (e) => {
-    setSelectedOption(e)
+    setStatus(e)
     filterTodos(e.value)
     // console.log(e);
   }
@@ -72,7 +72,7 @@ const TodoApp = () => {
     <div className="container">
       <NavBar
         unCompletedTodos={todos.filter((x) => !x.isCompleted).length}
-        selectedOption={selectedOption}
+        status={status}
         onChange={selectHandler}
       />
       <TodoForm submitTodo={addTodo} />
